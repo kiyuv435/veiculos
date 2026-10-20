@@ -16,8 +16,8 @@ veiculosRouter.get("/", async (req, res) => {
 veiculosRouter.get("/:id", async (req, res) => {
     const veiculoId = req.params.id
     try {
-        const veiculos = await veiculosServices.getById(veiculoId);
-        res.json(veiculos);
+        const veiculo = await veiculosServices.getById(veiculoId);
+        res.json(veiculo);
     }catch (error) {
         console.error (error);
         res.status(500).json({ error: "Erro ao buscar veículos"});    
@@ -28,6 +28,18 @@ veiculosRouter.post("/", async (req, res) => {
     try {
         const veiculos = await veiculosServices.create(req.body);
          res.status(201).json(veiculos);
+    }catch (error) {
+        console.error (error);
+    }
+});
+
+
+veiculosRouter.delete("/:id", async (req, res) => {
+    const veiculoId = req.params.id
+
+    try {
+        const veiculo = await veiculosServices.delete(veiculoId)
+         res.status(201).json(veiculo);
     }catch (error) {
         console.error (error);
     }
