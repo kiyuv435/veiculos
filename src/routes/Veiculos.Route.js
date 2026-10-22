@@ -54,3 +54,13 @@ veiculosRouter.put("/:id", async (req, res) => {
         console.error (error);
     }
 });
+
+veiculosRouter.knex("/:id", async (req, res) => {
+    const veiculoId = req.params.id
+    try {
+        const veiculoAtualizado = await veiculosServices.updateknex(veiculoId, req.body)
+         res.status(201).json(veiculoAtualizado);
+    }catch (error) {
+        console.error (error);
+    }
+});

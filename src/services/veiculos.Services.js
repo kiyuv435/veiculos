@@ -26,11 +26,41 @@ class veiculosService {
     async updatePut(id, data) {
         const res = await pool.query("UPDATE veiculos SET modelo=$2 , marca=$3, ano=$4, placa=$5 WHERE ID=$1 RETURNING *", [id, data.modelo, data.marca, data.ano, data.placa])
 
-        return{
+        return {
             message: "Veiculo atualizado com sucesso",
-            veiculo: res.rows[0]
+            veiculoAtualizado: res.rows[0]
         }
     }
+
+    //     async updatePatch(id, campos) {
+    //         const keys = Object.keys(campos)
+    //         if(keys.length == 0){
+    //             throw new Error("é necessário informar um campo para ser atualizado");
+    //         }
+
+    //         const queryDinamica = keys.map((key, index) =>
+    //             `${key} = $${index + 1}`
+    //         ).join(", ")
+
+    //         const valores = Object.values(campos)
+    //         valores.push(id)
+
+    //         const query = `UPDATE veiculos SET ${queryDinamica} WHERE id = $${valores.length} RETURNING *`
+
+    //         const res = await pool.query(query, valores)
+    //         return{
+    //             message: "Veiculos atualizado",
+    //             veiculoAtualizado: res.rows[0]
+    //         }
+    //     }
+
+    async updateknex(id, dados) {
+        const [veiculoAtualizado] = await knex("veiculos").where({ id }).update(dados).returning("*")
+        return res.rows[0]
+
+    }
 }
+
+
 
 export const veiculosServices = new veiculosService();
