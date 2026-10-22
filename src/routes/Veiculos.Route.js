@@ -44,3 +44,13 @@ veiculosRouter.delete("/:id", async (req, res) => {
         console.error (error);
     }
 });
+
+veiculosRouter.put("/:id", async (req, res) => {
+    const veiculoId = req.params.id
+    try {
+        const veiculoAtualizado = await veiculosServices.updatePut(veiculoId, req.body)
+         res.status(201).json(veiculoAtualizado);
+    }catch (error) {
+        console.error (error);
+    }
+});
